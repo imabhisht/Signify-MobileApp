@@ -2,33 +2,63 @@ import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 import { ColorSchemeName } from 'react-native';
+import LoginAuth from '../screens/LoginAuth';
+import LoginScreen from '../screens/LoginScreen';
 
 import NotFoundScreen from '../screens/NotFoundScreen';
+import OTPScreen from '../screens/OTPScreen';
+import RootScreen from '../screens/RootScreen';
+import StartProfileScreen from '../screens/StartProfileScreen';
 import { RootStackParamList } from '../types';
 import BottomTabNavigator from './BottomTabNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
+import {auth} from '../firebase'
 
-// If you are not familiar with React Navigation, we recommend going through the
-// "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
+  const [start,setStart] = React.useState("")
+  React.useEffect(() => {
+    auth().onAuthStateChanged((authuser) => {
+      if(authuser){
+        setStart('MainTabNavigator')
+      }else{
+        setStart('LoginNavigator')
+      }
+    });  
+  })
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
       theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <RootNavigator />
+      <RootNavigator startScreen={start}/>
     </NavigationContainer>
   );
 }
 
-// A root stack navigator is often used for displaying modals on top of all other content
-// Read more here: https://reactnavigation.org/docs/modal
-const Stack = createStackNavigator<RootStackParamList>();
 
-function RootNavigator() {
-  return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Root" component={BottomTabNavigator} />
-      <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
-    </Stack.Navigator>
+const Stack = createStackNavigator();
+const LoginStack = createStackNavigator();
+
+function LoginNavigator() {
+  return(
+  <LoginStack.Navigator >
+    <LoginStack.Screen name="LoginScreen" component={LoginScreen} options={{headerShown: false}}/>
+    <LoginStack.Screen name="OTPScreen" component={OTPScreen} options={{headerShown: false}}/>
+    <LoginStack.Screen name="StartProfileScreen" component={StartProfileScreen} options={{headerShown: false}}/>
+  </LoginStack.Navigator>
   );
 }
+
+function RootNavigator({startScreen}) {
+  console.log(typeof(startScreen))
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={startScreen}>
+
+      <Stack.Screen name="LoginNavigator" component={LoginNavigator} />
+      <Stack.Screen name="MainTabNavigator" component={BottomTabNavigator}/>
+       
+      <Stack.Screen name="NotFound" component={LoginAuth} options={{ title: 'Oops!' }} />
+    </Stack.Navigator>  
+  );
+}
+
+

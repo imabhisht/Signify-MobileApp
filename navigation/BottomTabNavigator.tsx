@@ -1,35 +1,93 @@
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons , FontAwesome, Feather} from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, HeaderTitle } from '@react-navigation/stack';
 import * as React from 'react';
-
+import {View,Text,StyleSheet} from 'react-native';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
+import HeaderSkin from '../components/HeaderSkin'
+import ChatListRoomNavigatior from './ChatListRoomNavigatior';
+const BottomTab = createMaterialBottomTabNavigator<BottomTabParamList>();
 
-const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
 export default function BottomTabNavigator() {
   const colorScheme = useColorScheme();
-
+  const color = Colors[colorScheme]
   return (
-    <BottomTab.Navigator
-      initialRouteName="TabOne"
-      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
+    <BottomTab.Navigator screenOptions={{
+      tabBarColor: Colors[colorScheme].background,
+      }}
+      barStyle={{ 
+        backgroundColor: '#fafafa',
+        paddingBottom: 7,
+        
+      }}
+      activeColor="black"
+      
+      
+      >
       <BottomTab.Screen
-        name="TabOne"
+        name="ProfileScreen"
         component={TabOneNavigator}
+        
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          title: "Profile",
+          tabBarIcon: ({ color }) => {
+            return(
+            <View style={{marginTop: -2}}>
+            <FontAwesome name="user-o" size={26} color={color} />
+            </View>
+            );
+            }   
         }}
       />
+
       <BottomTab.Screen
-        name="TabTwo"
+        name="ChatListRoomScreen"
+        component={ChatListRoomNavigatior}
+        options={{
+          title:"Chats",
+          tabBarIcon: ({ color }) => {
+          return(
+          <View style={{marginTop: -2}}>
+          <Ionicons size={26} name="ios-chatbubble-ellipses-outline" color={color} />
+          </View>
+          );
+        }
+        }}
+      />
+      
+      <BottomTab.Screen
+        name="GroupRoomScreen"
+        component={TabOneNavigator}
+        options={{
+          title:"Groups",
+          tabBarIcon: ({ color }) => {
+            return(
+            <View style={{marginTop: -2}}>
+            <Ionicons size={26} name="md-chatbubbles-outline" color={color} />
+            </View>
+            );
+          }
+        }}
+      />
+
+      <BottomTab.Screen
+        name="SettingsScreen"
         component={TabTwoNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          title:"Settings",
+          tabBarIcon: ({ color }) => {
+            return(
+            <View style={{marginTop: -2}}>
+            <Ionicons size={26} name="settings-outline" color={color} />
+            </View>
+            );
+          }
         }}
       />
     </BottomTab.Navigator>
@@ -43,7 +101,7 @@ function TabBarIcon(props: { name: React.ComponentProps<typeof Ionicons>['name']
 }
 
 // Each tab has its own navigation stack, you can read more about this pattern here:
-// https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
+// https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tabs
 const TabOneStack = createStackNavigator<TabOneParamList>();
 
 function TabOneNavigator() {
@@ -51,8 +109,8 @@ function TabOneNavigator() {
     <TabOneStack.Navigator>
       <TabOneStack.Screen
         name="TabOneScreen"
-        component={TabOneScreen}
-        options={{ headerTitle: 'Tab One Title' }}
+        component={ChatListRoomNavigatior}
+        options={HeaderSkin.ChatRoomSkin}
       />
     </TabOneStack.Navigator>
   );
@@ -71,3 +129,23 @@ function TabTwoNavigator() {
     </TabTwoStack.Navigator>
   );
 }
+
+const styles = StyleSheet.create({
+  ChatRoomHeaderRight:{
+    backgroundColor: 'white', 
+    padding: 7,
+    // borderColor:'gray',
+    // borderWidth: 0.5,
+    borderRadius: 8,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
+  }
+
+})

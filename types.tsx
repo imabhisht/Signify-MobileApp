@@ -1,11 +1,14 @@
 export type RootStackParamList = {
-  Root: undefined;
+  LoginNavigator: undefined;
   NotFound: undefined;
+  MainTabNavigator: undefined;
 };
 
 export type BottomTabParamList = {
-  TabOne: undefined;
-  TabTwo: undefined;
+  ProfileScreen: undefined;
+  ChatRoomScreen: undefined;
+  GroupRoomScreen: undefined;
+  SettingsScreen: undefined;
 };
 
 export type TabOneParamList = {
