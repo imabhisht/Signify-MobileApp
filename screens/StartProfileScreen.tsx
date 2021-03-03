@@ -16,6 +16,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import * as firebase from 'firebase';
+import UpdateUserInfo from '../firebaseBackend/userStaticDatabase'
 
 
 
@@ -107,7 +108,7 @@ function StartProfileScreen({navigation}) {
         await user?.updateProfile({
           displayName: name
         })
-
+        await UpdateUserInfo;
         navigation.replace('MainTabNavigator', { screen: 'ChatRoom' });
     }catch (error) {
         console.log("error coming from here")

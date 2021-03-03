@@ -12,26 +12,57 @@ import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
 import HeaderSkin from '../components/HeaderSkin'
 import ChatList from '../screens/ChatListRoom/ChatList';
 import {auth} from '../firebase'
+import ImageVIewer from '../screens/ImageVIewer';
+import ChatScreen from '../screens/ChatListRoom/ChatScreen';
+import ChatScreenNavigator from './ChatScreenNavigator';
+import { Ionicons } from '@expo/vector-icons';
+import ChatScreenTrial from '../screens/ChatListRoom/ChatScreenTrial'
 
 const ChatListRoomStack = createStackNavigator();
 
-export default function(){
+export default function({navigation,route}){
     const colorScheme = useColorScheme();
 
+
+        if(route.state && route.state.index > 0){
+            navigation.setOptions({tabBarVisible: false})
+        }else{
+            navigation.setOptions({tabBarVisible: true})
+        }
+
+        
+
+    
     return(
         <ChatListRoomStack.Navigator>
             <ChatListRoomStack.Screen name="ChatList" component={ChatList}
             options={ChatListScreenHeaderDesign}
             />
+            <ChatListRoomStack.Screen name="ImageViewer" component={ImageVIewer} options={{headerShown:false}}/>
+
+            <ChatListRoomStack.Screen name="ChatScreenTrial" component={ChatScreenTrial} options={{
+            headerShown:true}}/>
+
+            <ChatListRoomStack.Screen name="ChatScreen" component={ChatScreen} options={{
+                headerStatusBarHeight: 50,
+                headerLeftContainerStyle:{
+                    paddingBottom: '15%',
+                },
+            }}/>
 
         </ChatListRoomStack.Navigator>
+
+
+
     )
 }
 
 
+
+
 const styles = StyleSheet.create({
     header:{  
-        marginTop: '7%',
+        marginTop: '10%',
         flexDirection: 'row',
         justifyContent: 'space-between', 
         alignItems: 'center'
@@ -53,7 +84,7 @@ const styles = StyleSheet.create({
 
     },
     title:{
-        fontSize:21,
+        fontSize:25,
         color: '#45454f',
         letterSpacing: 0.2,
         fontFamily: 'Roboto_400Regular',
@@ -86,7 +117,7 @@ const styles = StyleSheet.create({
 
 const ChatListScreenHeaderDesign = () => {
     return(
-        {
+        { 
             headerTitle: () => {
                 return(
                   <View style={styles.header}>

@@ -23,7 +23,8 @@ const db = app.firestore();
 const auth = firebase.auth;
 const firebaseapp = firebase.app();
 const userCurrent = auth().currentUser
-export { db,auth , userCurrent};
+const database = firebase.database()
+export { db,auth , userCurrent , database};
 
 // rules_version = '2';
 // service firebase.storage {

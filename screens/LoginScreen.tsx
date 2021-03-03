@@ -4,7 +4,8 @@ import { FontAwesome5,MaterialIcons } from '@expo/vector-icons';
 import PhoneInput from "react-native-phone-number-input";
 import { FirebaseRecaptchaVerifierModal, FirebaseRecaptchaBanner } from 'expo-firebase-recaptcha';
 import * as firebase from 'firebase';
-import {auth} from '../firebase'
+import {auth, db} from '../firebase'
+import {UpdateUserInfo} from '../firebaseBackend/userStaticDatabase'
 try {
   firebase.initializeApp({
     apiKey: "AIzaSyCL2DW_XMmziTfqffdtcuU9QY3F047Wedg",
@@ -38,6 +39,7 @@ function LoginScreen ({navigation}) {
   useEffect(() => {
     const unsubscribe = auth().onAuthStateChanged((authuser) => {
       if(authuser){
+        UpdateUserInfo;
         navigation.replace('MainTabNavigator', { screen: 'ChatListRoomScreen' });
       }
     });

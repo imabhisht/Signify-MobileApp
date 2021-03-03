@@ -68,8 +68,8 @@ function OTPScreen({navigation, route})  {
             try {
               const credential = auth.PhoneAuthProvider.credential(verificationId,pin);
               await auth().signInWithCredential(credential)
-              // const currentUser = auth().currentUser
-              // console.log(currentUser)
+              const currentUser = auth().currentUser
+              console.log(currentUser)
               
               navigation.replace("StartProfileScreen")
             } catch (err) {

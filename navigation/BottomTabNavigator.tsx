@@ -11,25 +11,23 @@ import TabTwoScreen from '../screens/TabTwoScreen';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
 import HeaderSkin from '../components/HeaderSkin'
 import ChatListRoomNavigatior from './ChatListRoomNavigatior';
-const BottomTab = createMaterialBottomTabNavigator<BottomTabParamList>();
+const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
 
 export default function BottomTabNavigator() {
   const colorScheme = useColorScheme();
   const color = Colors[colorScheme]
   return (
-    <BottomTab.Navigator screenOptions={{
-      tabBarColor: Colors[colorScheme].background,
-      }}
-      barStyle={{ 
+    <BottomTab.Navigator
+    tabBarOptions={{
+      tabStyle:{
         backgroundColor: '#fafafa',
         paddingBottom: 7,
-        
-      }}
-      activeColor="black"
-      
-      
-      >
+      },
+      activeTintColor: '#45454f',
+      showLabel: false
+    }}
+     >
       <BottomTab.Screen
         name="ProfileScreen"
         component={TabOneNavigator}
@@ -39,7 +37,7 @@ export default function BottomTabNavigator() {
           tabBarIcon: ({ color }) => {
             return(
             <View style={{marginTop: -2}}>
-            <FontAwesome name="user-o" size={26} color={color} />
+            <FontAwesome name="user-o" size={28} color={color} />
             </View>
             );
             }   
@@ -50,14 +48,16 @@ export default function BottomTabNavigator() {
         name="ChatListRoomScreen"
         component={ChatListRoomNavigatior}
         options={{
-          title:"Chats",
+  
+          title: "Chats",
           tabBarIcon: ({ color }) => {
           return(
           <View style={{marginTop: -2}}>
-          <Ionicons size={26} name="ios-chatbubble-ellipses-outline" color={color} />
+          <Ionicons size={28} name="ios-chatbubble-ellipses-outline" color={color} />
           </View>
           );
         }
+  
         }}
       />
       
@@ -69,7 +69,7 @@ export default function BottomTabNavigator() {
           tabBarIcon: ({ color }) => {
             return(
             <View style={{marginTop: -2}}>
-            <Ionicons size={26} name="md-chatbubbles-outline" color={color} />
+            <Ionicons size={28} name="md-chatbubbles-outline" color={color} />
             </View>
             );
           }
@@ -84,7 +84,7 @@ export default function BottomTabNavigator() {
           tabBarIcon: ({ color }) => {
             return(
             <View style={{marginTop: -2}}>
-            <Ionicons size={26} name="settings-outline" color={color} />
+            <Ionicons size={28} name="settings-outline" color={color} />
             </View>
             );
           }
