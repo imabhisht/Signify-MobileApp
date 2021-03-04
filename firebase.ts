@@ -3,14 +3,7 @@ import '@firebase/auth';
 import '@firebase/firestore';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCL2DW_XMmziTfqffdtcuU9QY3F047Wedg",
-    authDomain: "app-signify.firebaseapp.com",
-    databaseURL: "https://app-signify-default-rtdb.firebaseio.com",
-    projectId: "app-signify",
-    storageBucket: "app-signify.appspot.com",
-    messagingSenderId: "144281610498",
-    appId: "1:144281610498:web:86943f826318d7552b7a1b",
-    measurementId: "G-2Q2RNRGNWL"
+    //ITS PROTECTED
   };
 
 let app;
